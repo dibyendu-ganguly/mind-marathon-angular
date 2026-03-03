@@ -1,0 +1,17 @@
+input[type="file"],.form-control-file{
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.delete,.preview,.copy{
+  cursor: pointer;
+}
+:host .title ::ng-deep{
+  --mat-form-field-container-height: 40px;
+  .mat-mdc-form-field-subscript-wrapper{
+    display: none;
+  }
+  .mat-mdc-form-field-infix{
+    padding: 8px 0px;
+    min-height: var(--mat-form-field-container-height);
+  }
+}

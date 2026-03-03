@@ -1,0 +1,204 @@
+<mat-card class="quiz-info">
+  <mat-card-content>
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-8">
+      <div class="text-3xl pb-4">
+        {{ preview.value.quizName ? (preview.value.quizName | titlecase) : 'Untitled Quiz'}}
+      </div>
+      <div class="flex flex-wrap items-center gap-6 pb-4 md:justify-end">
+        <div class="date flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3"
+            viewBox="0 0 16 16">
+            <path
+              d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
+            <path
+              d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+          </svg>
+          <span>
+            {{ preview.value.quizDateTime| date : 'dd MMM yyyy' }}
+          </span>
+        </div>
+
+        <div class="time flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock"
+            viewBox="0 0 16 16">
+            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
+          </svg>
+          <span>
+            {{ preview.value.quizDateTime| date : 'hh:mm a' }}
+          </span>
+        </div>
+
+      </div>
+    </div>
+    <div class="grid">
+      <div>
+        {{ preview.value.description | titlecase }}
+      </div>
+    </div>
+  </mat-card-content>
+
+</mat-card>
+@let questionShuffleEnabled = preview.value.settings?.questionShuffle;
+
+<div class="flex justify-between items-center pt-4 mb-[-1rem] flex-wrap sm:flex-nowrap">
+
+  <button [class]="txtBtnclass" matStepperPrevious>Back</button>
+
+
+  <div class="flex justify-evenly sm:justify-center align-center gap-1 order-3 w-[100%] sm:order-2 pt-4 sm:pt-0">
+    <button [class]="iconBtnClass" aria-label="Move up" [disabled]="questionShuffleEnabled" (click)="moveUp()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z"/>
+      </svg>
+    </button>
+    <button [class]="iconBtnClass" aria-label="Move top" [disabled]="questionShuffleEnabled" (click)="moveTop()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-up" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708z"/>
+        <path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708z"/>
+      </svg>
+    </button>
+    <button [class]="iconBtnClass" aria-label="Move down" [disabled]="questionShuffleEnabled" (click)="moveDown()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+      </svg>
+    </button>
+    <button [class]="iconBtnClass" aria-label="Move bottom" [disabled]="questionShuffleEnabled" (click)="moveBottom()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+        <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+      </svg>
+    </button>
+    <button [class]="iconBtnClass" [disabled]="questionShuffleEnabled" (click)="resetSelection()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+      </svg>
+    </button>
+
+  </div>
+  <button [class]="txtBtnclass + ' sm:order-3'" matStepperNext>Next</button>
+
+</div>
+
+
+<div cdkDropList (cdkDropListDropped)="drop($event)">
+
+  <cdk-accordion class="quiz-accordion question-box py-4 my-4">
+    @for (item of questions.controls; track $index; let idx = $index, e = $even) {
+      <cdk-accordion-item cdkDrag #accordionItem="cdkAccordionItem"
+        class="quiz-accordion-item shadow-lg border bg-surface rounded-lg"
+        role="button" tabindex="0" [attr.id]="'accordion-header-' + idx" [attr.aria-expanded]="accordionItem.expanded"
+        [attr.aria-controls]="'accordion-body-' + idx"
+        [class.selected]="selectedQuestionIndex == idx"
+        (cdkDragStarted)="accordionItem.close()"
+        (click)="selectQuestion(idx, questionShuffleEnabled)"
+        >
+
+        <div class="quiz-accordion-item-header p-1 md:p-2 lg:p-4">
+          <div class="flex items-center">
+            <!--Toggle Accordion-->
+            <button  mat-icon-button class="quiz-accordion-item-description" (click)="accordionItem.toggle(); $event.stopImmediatePropagation();">
+              @if(accordionItem.expanded){
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                  <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                  <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
+                </svg>
+              }
+            </button>
+            <h1 class="text-lg md:text-xl">
+              {{idx+1}}. {{ item.controls.title.value }}
+            </h1>
+          </div>
+          <!--Drag Handle-->
+          <button [disabled]="questionShuffleEnabled" mat-icon-button cdkDragHandle matTooltip="Drag me to reorder questions">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grip-vertical" viewBox="0 0 16 16">
+              <path d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+            </svg>
+          </button>
+
+
+        </div>
+        <!--Body-->
+        <div class="quiz-accordion-item-body p-4 pt-0" role="region" [style.display]="accordionItem.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + idx" [attr.aria-labelledby]="'accordion-header-' + idx">
+          <div class="question font-bold">
+            {{ item.controls.question.value }}
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
+            excepturi incidunt ipsum deleniti labore, tempore non nam doloribus blanditiis
+            veritatis illo autem iure aliquid ullam rem tenetur deserunt velit culpa?
+          </div>
+          <div class="file">
+            @let file = item.controls.file.value;
+            @let fileType = file ? file.type: '' ;
+
+            @if(file){
+              @defer(on timer(1000)){
+                  @if (fileType.includes('pdf')) {
+                    <object [attr.data]="transform(item.controls.fileSrc.value)" type="application/pdf"></object>
+                  }
+                  @else if (fileType.includes('image')) {
+                    <img [src]="item.controls.fileSrc.value || 'http://placehold.it/180'" alt="your image" class="file-image" />
+                  }
+                  @else if (fileType.includes('audio')) {
+                    <audio controls [src]="transform(item.controls.fileSrc.value)">
+                      Your browser does not support the
+                      <code>audio</code> element.
+                    </audio>
+                  }
+                  @else if (fileType.includes('video')) {
+                    <video controls width="250" height="auto" style="max-height: 250px;" class="video-element" id="video-element">
+                      <source [src]="item.controls.fileSrc.value" type="video/mp4">
+                      <source [src]="item.controls.fileSrc.value" type="video/ogg">
+                      <source [src]="item.controls.fileSrc.value" type="video/webm">
+                      Sorry, your browser doesn't support embedded videos.
+                    </video>
+                  }
+                  @else {
+                    No preview available for this type of file
+                  }
+                } @placeholder {
+
+                    @if (fileType.includes('pdf')) {
+                      <img src="assets/images/elementor-placeholder-pdf.png" alt="your image" style="width:250px;height: 250px;" />
+                    }
+                    @else if (fileType.includes('image')) {
+                      <img src="assets/images/elementor-placeholder-image.webp" alt="your image" style="width:250px;height: 250px;" />
+                    }
+                    @else if (fileType.includes('audio')) {
+                      <img src="assets/images/elementor-placeholder-audio.gif" alt="your image" style="width:250px;height: 250px;" />
+                    }
+                    @else if (fileType.includes('video')) {
+                      <img src="assets/images/elementor-placeholder-video.png" alt="your image" style="width:250px;height: 250px;" />
+                    }
+                    @else {
+                      No preview available for this type of file
+                    }
+              }
+            }
+          </div>
+        </div>
+        <!-- <div *cdkDragPreview>123wedr</div> -->
+        <!-- <img *cdkDragPreview src="assets/images/image.png" alt="qwse"> -->
+        <div class="quiz-custom-placeholder" *cdkDragPlaceholder>
+          {{ item.controls.title.value }}
+        </div>
+
+      </cdk-accordion-item>
+    }
+  </cdk-accordion>
+
+</div>
+
+<ng-container [formGroup]="createQuizForm">
+  <ng-container formGroupName="settings">
+    <div class="flex flex-col items-center">
+      <mat-slide-toggle formControlName="questionShuffle">
+        Allow Question Shuffling
+      </mat-slide-toggle>
+    </div>
+  </ng-container>
+</ng-container>

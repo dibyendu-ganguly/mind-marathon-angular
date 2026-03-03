@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+//#### some bug in material & tailwind combination
+
+// for form-field : two ways; 2nd is commented out
+.mat-mdc-notch-piece{
+  border: none;
+}
+// .mdc-notched-outline__notch
+// {
+//   border-right: none;
+// }
+
+//for icon button
+.mat-mdc-icon-button{
+  line-height: normal;
+}
+
+

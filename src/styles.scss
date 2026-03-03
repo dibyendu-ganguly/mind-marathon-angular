@@ -1,1 +1,64 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+
+@import "./styles/tailwind-imports.scss";
+@import "./styles/light.scss";
+@import "./styles/light-hc.scss";
+@import "./styles/light-mc.scss";
+@import "./styles/dark.scss";
+@import "./styles/dark-hc.scss";
+@import "./styles/dark-mc.scss";
+@import "./styles/material-overridings.scss";
+
+
+
+
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+$mm-theme: mat.define-theme((color: (use-system-variables: true),
+      typography: (plain-family: '"Open Sans", "Helvetica Neue", sans-serif'
+      )));
+
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  // Apply Sass mixin that includes styles for all components
+  @include mat.all-component-themes($mm-theme);
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+// html, :host{
+//   text-size-adjust: 100%;
+// }
+
+// main router-outlet+* {
+//   min-height: 100%;
+//   // height: 100%;
+//   max-height: max-content;
+//   display: block;
+// }
+// .mat-mdc-option{
+//   min-height: 24px !important;
+//   height: 2vh !important;
+//   font-size: 14px !important;
+// }
+// .mat-mdc-option .mdc-list-item__primary-text{
+//   white-space: nowrap !important;
+//   text-overflow: ellipsis;
+//   overflow: hidden;
+// }
+// div.mat-mdc-select-panel, div.mat-mdc-autocomplete-panel{
+//   padding: 0 !important;
+// }

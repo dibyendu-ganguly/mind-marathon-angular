@@ -1,0 +1,426 @@
+<ng-container [formGroup]="createQuizForm" #fgd="ngForm" (ngSubmit)="fgd.onSubmit($event)">
+  @for(item of questions.controls; track item ;let i=$index){
+    <div formArrayName="questions" @questionAddingState>
+    <mat-divider></mat-divider>
+    <div [formGroupName]="i" >
+      <!--question body-->
+      <div class="flex justify-between py-4">
+
+        <mat-form-field class="title mb-2">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+        </mat-form-field>
+
+        <div class="flex justify-between gap-2 ml-3">
+
+          @if(questions.controls.length>1){
+            <!--Move Up-->
+            <button type="button" [class]="'h-min'" aria-label="Move up" (click)="moveUp(i)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up fill-primary"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
+              </svg>
+            </button>
+            <!--Move Top-->
+            <button type="button" [class]="'h-min'" aria-label="Move top" (click)="moveTop(i)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-up fill-primary"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708z" />
+                <path fill-rule="evenodd"
+                  d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
+              </svg>
+            </button>
+            <!--Move Down-->
+            <button type="button" [class]="'h-min'" aria-label="Move down" (click)="moveDown(i)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down fill-primary"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+              </svg>
+            </button>
+            <!--Move Bottom-->
+            <button type="button" [class]="'h-min'"  aria-label="Move bottom" (click)="moveBottom(i)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down fill-primary" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+                <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+              </svg>
+            </button>
+            <!--delete-->
+            <button type="button" class="delete h-min" (click)="removeQuestion(i)"
+              [matTooltip]="'Delete question '+(i+1)" matTooltipShowDelay="1000">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill"
+                viewBox="0 0 16 16">
+                <path fill="red"
+                  d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+              </svg>
+            </button>
+          }
+
+          <!--Copy-->
+          <button type="button" class="copy h-min" (click)="copyQuestion(i)" [matTooltip]="'Copy question '+(i+1)" matTooltipShowDelay="1000">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-copy fill-primary" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+            </svg>
+          </button>
+
+        </div>
+
+      </div>
+      <mat-form-field class="w-full mb-2">
+        <mat-label>Question {{i+1}}</mat-label>
+        <textarea matInput placeholder="Enter The question..." formControlName="question"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5"></textarea>
+        @if(questions.get(i+'.question')?.hasError('required')){
+          <mat-error>
+            Question {{i+1}} is <strong>required</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+
+
+      <!--question file-->
+      <div class="h-full flex justify-start items-center">
+
+        <!-- <label for="{{'file' + i}}" class="hidden sm:inline-block"> Attach file: &nbsp;&nbsp;</label> -->
+        <div class="flex w-full">
+          <button
+            class="bg-primary border border-e-0 border-gray-300 rounded-s-md py-2 px-4 text-center text-sm text-white transition-all shadow-sm hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            id="{{'fileButton' + i}}" (click)="fileInput.click()" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip fill-on-primary"
+              viewBox="0 0 16 16">
+              <path
+                d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
+            </svg>
+          </button>
+          <input hidden #fileInput id="{{'file' + i}}" type="file" accept="image/*,audio/*,video/*,.pdf" ng2FileSelect
+            (change)="onFileSelected($event, i)" (click)="fileInput.value = ''">
+          <input type="hidden" formControlName="file">
+
+          @let filetype = questions.get([i,'file'])?.value?.type;
+          @let fileName = questions.get([i,'file'])?.value?.name;
+          @let fileSrcObj = questions.get([i,'fileSrc'])?.value;
+
+          <span
+            [matTooltip]="!!filetype? fileName :'Attach file'"
+            class="truncate rounded-none bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            (click)="fileInput.click()" role="button">
+            @if(!!filetype){
+              <strong>{{fileName}}</strong>
+            }
+            @else {
+              Attach file
+            }
+          </span>
+          @if(!!filetype){
+            <span
+              matTooltip="Clear file"
+              class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-s-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600 cursor-pointer"
+              (click)="removeFile(i)"
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+              </svg>
+            </span>
+          }
+
+          <span
+            class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-s-0 border-gray-300 rounded-e-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600 preview"
+            [matTooltip]="filetype ? 'Show Preview' : 'Supported files image/*,audio/*,video/*,.pdf'" matTooltipPosition="after" matTooltipHideDelay="2000">
+
+            @if(!!filetype){
+              @if (filetype.includes('image/')){
+
+              <!--if file is image-->
+              <img id="{{'image' + i}}" [src]="fileSrcObj || 'http://placehold.it/180'" alt="your image"
+                style="width:25px;height: 25px;" (click)="showPreview(fileSrcObj,'image', i)" />
+
+              }
+              @else if(filetype.includes('audio/')){
+              <!--if file is audio-->
+              <span (click)="showPreview(fileSrcObj,'audio', i)">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-soundwave"
+                  viewBox="0 0 16 16">
+                  <path fill="blue" fill-rule="evenodd"
+                    d="M8.5 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11a.5.5 0 0 1 .5-.5zm-2 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm-6 1.5A.5.5 0 0 1 5 6v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm8 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm-10 1A.5.5 0 0 1 3 7v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5zm12 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5z" />
+                </svg>
+
+              </span>
+              }
+              @else if(filetype.includes('video/')){
+              <!--if file is video-->
+              <span (click)="showPreview(fileSrcObj,'video', i)">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-display"
+                  viewBox="0 0 16 16">
+                  <path fill="blue"
+                    d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4c0 .667.083 1.167.25 1.5H11a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1h.75c.167-.333.25-.833.25-1.5H2s-2 0-2-2V4zm1.398-.855a.758.758 0 0 0-.254.302A1.46 1.46 0 0 0 1 4.01V10c0 .325.078.502.145.602.07.105.17.188.302.254a1.464 1.464 0 0 0 .538.143L2.01 11H14c.325 0 .502-.078.602-.145a.758.758 0 0 0 .254-.302 1.464 1.464 0 0 0 .143-.538L15 9.99V4c0-.325-.078-.502-.145-.602a.757.757 0 0 0-.302-.254A1.46 1.46 0 0 0 13.99 3H2c-.325 0-.502.078-.602.145z" />
+                </svg>
+
+              </span>
+              }
+              @else{
+              <span (click)="showPreview(fileSrcObj,'pdf', i)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-pdf"
+                  viewBox="0 0 16 16">
+                  <path fill="blue"
+                    d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1" />
+                  <path fill="blue"
+                    d="M4.603 12.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.187-.012.395-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.065.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.6 11.6 0 0 0-1.997.406 11.3 11.3 0 0 1-1.021 1.51c-.29.35-.608.655-.926.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.244.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 5.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z" />
+                </svg>
+              </span>
+              }
+            }
+            @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+              </svg>
+            }
+
+
+          </span>
+
+        </div>
+
+
+
+
+      </div>
+      <p class="block min-h-10 mb-2 text-sm font-medium">
+        @if(!!filetype){
+          Click on {{filetype}} icon to preview file.
+          <br/>
+          Click on the clip button again to change file.
+        } @else {
+          Click on the clip button to add file to the question.
+        }
+      </p>
+
+      <!--Answer type-->
+      <div class="my-4">
+        <mat-label class="block mb-2 text-sm font-medium px-2 min-w-max">Answer Type:</mat-label>
+        <mat-button-toggle-group formControlName="answerType" aria-label="Change Answer Type" class="w-full"
+          (change)="onAnswerTypeChanged(i)">
+          <mat-button-toggle class="flex-1" value="Option">Options</mat-button-toggle>
+          <mat-button-toggle class="flex-1" value="Text">Text</mat-button-toggle>
+          <mat-button-toggle class="flex-1" value="YesNo">True/False</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+
+      <!--question options-->
+      @let isWithOptions = questions.value[i].answerType === 'Option';
+
+
+        @if(isWithOptions){
+          <div  class="grid grid-cols-1 md:grid-cols-2 md:gap-x-4">
+            @for(option of questions.controls[i].controls.options.controls; track option ; let optInd=$index){
+              <div formArrayName="options">
+                @let optionsLength = questions.controls[i].controls.options.controls.length;
+
+                <mat-form-field class="w-full title mb-4">
+                  <mat-label>Option {{+optInd+1}}</mat-label>
+                  <input matInput [placeholder]="'Option '+(+optInd+1)" [formControlName]="optInd">
+                  @if(optionsLength>2){
+                  <button type="button" mat-icon-button matSuffix class="p-2" (click)="removeOption(i,optInd)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill"
+                      viewBox="0 0 16 16">
+                      <path fill="red"
+                        d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                    </svg>
+                  </button>
+                  }
+                  @if(questions.get(i+'.options.option'+optInd)?.hasError('required')){
+                  <mat-error>
+                    Option {{optInd}} <strong>required</strong>
+                  </mat-error>
+                  }
+                </mat-form-field>
+                <!-- <mat-form-field class="w-full">
+                                <input matInput placeholder="Option 2" formControlName="option2">
+                                <mat-error *ngIf="questions.get(i+'.options.option2')?.hasError('required')">
+                                  Option 2 <strong>required</strong>
+                                </mat-error>
+                              </mat-form-field>
+                              <mat-form-field class="w-full">
+                                <input matInput placeholder="Option 3" formControlName="option3">
+                                <mat-error *ngIf="questions.get(i+'.options.option3')?.hasError('required')">
+                                  Option 3 <strong>required</strong>
+                                </mat-error>
+                              </mat-form-field>
+                              <mat-form-field class="w-full">
+                                <input matInput placeholder="Option 4" formControlName="option4">
+                                <mat-error *ngIf="questions.get(i+'.options.option4')?.hasError('required')">
+                                  Option 4 <strong>required</strong>
+                                </mat-error>
+                              </mat-form-field> -->
+              </div>
+            }
+
+          </div>
+        }
+
+      <!--Text Answer-->
+      @let answerControlError = questions.get(i+'.answer')?.touched &&
+      questions.get(i+'.answer')?.hasError('required');
+
+      @let answerType = questions.value[i].answerType;
+
+      @switch(answerType){
+        @case('Text'){
+          <mat-form-field class="w-full pb-2">
+            <mat-label>Answer</mat-label>
+            <textarea matInput placeholder="Enter The Answer..." formControlName="answer"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"></textarea>
+            @if (answerControlError) {
+            <mat-error>
+              Answer for this question (Q.{{i+1}}) is <strong>required</strong>
+            </mat-error>
+            }
+          </mat-form-field>
+        }
+        @case('Option'){
+          <div class="flex justify-between items-start gap-2">
+            <mat-form-field>
+              <mat-label>Answer</mat-label>
+              <mat-select formControlName="answer">
+                @for (option of questions.controls[i].controls.options.controls; track option; let optInd= $index;) {
+                  <mat-option [value]="'Option '+(+optInd+1)">{{'Option '+(+optInd+1)}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <button
+            class="rounded-md border border-transparent py-2 px-4 text-center text-sm transition-all text-slate-600 hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            type="button" (click)="addOption(i)" [matTooltip]="'Add Option '+ (questions.controls[i].controls.options.controls.length+1)"
+            matTooltipShowDelay="500">
+            + Add Option
+          </button>
+          </div>
+          @if (answerControlError) {
+            <mat-error class="mb-2">
+              Answer for this question (Q.{{i+1}}) is <strong>required</strong>
+            </mat-error>
+            }
+
+        }
+        @case('YesNo'){
+          <div>
+            <label>Answer</label>
+            @if (answerControlError) {
+            <mat-error>
+              Answer for this question (Q.{{i+1}}) is <strong>required</strong>
+            </mat-error>
+            }
+          </div>
+          <mat-radio-group class="grid grid-cols-2" formControlName="answer">
+            <mat-radio-button value="Yes">Yes</mat-radio-button>
+            <mat-radio-button value="No">No</mat-radio-button>
+          </mat-radio-group>
+        }
+      }
+
+
+    </div>
+  </div>}
+</ng-container>
+
+
+<ng-template #previewTab>
+  <!-- <h2 mat-dialog-title>Hi </h2> -->
+  <mat-dialog-content>
+    <div class="h-full flex flex-col justify-center items-center">
+
+      @defer(on timer(2000)){
+        @switch (previewFileType) {
+          @case ('pdf') {
+          <object [attr.data]="transform(previewFileSrc)" type="application/pdf"></object>
+          }
+          @case ('image') {
+          <img [src]="previewFileSrc || 'http://placehold.it/180'" alt="your image" style="width:250px;height: 250px;" />
+          }
+          @case ('audio') {
+          <audio controls [src]="transform(previewFileSrc)">
+            Your browser does not support the
+            <code>audio</code> element.
+          </audio>
+          }
+          @case ('video') {
+          <video controls width="250" height="auto" style="max-height: 250px;" class="video-element" id="video-element">
+            <source [src]="previewFileSrc" type="video/mp4">
+            <source [src]="previewFileSrc" type="video/ogg">
+            <source [src]="previewFileSrc" type="video/webm">
+            Sorry, your browser doesn't support embedded videos.
+          </video>
+          }
+          @default {
+            No preview available for this type of file
+          }
+        }
+      } @placeholder {
+      @switch (previewFileType) {
+      @case ('pdf') {
+      <img src="../../../../assets/images/elementor-placeholder-pdf.png" alt="your image"
+        style="width:250px;height: 250px;" />
+      }
+      @case ('image') {
+      <img src="../../../../assets/images/elementor-placeholder-image.webp" alt="your image"
+        style="width:250px;height: 250px;" />
+      }
+      @case ('audio') {
+      <img src="../../../../assets/images/elementor-placeholder-audio.gif" alt="your image"
+        style="width:250px;height: 250px;" />
+      }
+      @case ('video') {
+      <img src="../../../../assets/images/elementor-placeholder-video.png" alt="your image"
+        style="width:250px;height: 250px;" />
+      }
+      @default {
+      No preview available for this type of file
+      }
+      }
+      }
+
+
+      <div>
+        <i>{{previewFile.name}}</i>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="center">
+    <button mat-mini-fab color="warn" cdkFocusInitial matDialogClose>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
+
+
+</ng-template>
+
+<!-- <ng-template #audioPreview>Audio
+  <audio controls [src]="transform(previewFileSrc)" >
+    Your browser does not support the
+    <code>audio</code> element.
+  </audio>
+</ng-template> -->
+
+<!-- <ng-template #videoPreview>Video
+  <video controls width="250" height="250" class="video-element" id="video-element">
+    <source [src]="previewFileSrc" type="video/mp4">
+    <source [src]="previewFileSrc" type="video/ogg">
+    <source [src]="previewFileSrc" type="video/webm">
+    Sorry, your browser doesn't support embedded videos.
+  </video>
+</ng-template> -->
+
+<!-- <ng-template #imagePreview>Image
+  <img [src]="previewFileSrc || 'http://placehold.it/180'" alt="your image" style="width:250px;height: 250px;" />
+</ng-template> -->

@@ -1,0 +1,72 @@
+mat-dialog-content{
+  scrollbar-width: none;
+}
+.tab-body{
+  min-height: 50vh;
+  max-height: 50vh;
+}
+.chat-body {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0.25rem 20px 0;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.chat-container {
+  border: 2px solid var(--sys-secondary-fixed-dim);
+  background-color: var(--sys-primary-fixed);
+  border-radius: 5px;
+  color: var(--sys-on-primary-fixed);
+}
+
+.darker {
+  border-color: var(--sys-secondary-fixed-dim);
+  background-color: var(--sys-primary-fixed-dim);
+}
+
+.chat-container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+img.profile {
+  float: left;
+  max-width: 60px;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+}
+
+.chat-container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+
+.btn-container{
+  // position: absolute;
+  height: 50vh;
+}
+.btn-row{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.empty-profile-img{
+  position: relative;
+  top: 2px;
+}

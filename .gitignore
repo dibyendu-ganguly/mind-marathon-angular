@@ -5,6 +5,9 @@
 /tmp
 /out-tsc
 /bazel-out
+/android
+/ios
+/.firebase
 
 # Node
 /node_modules
@@ -29,6 +32,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
+/.angular
 /.angular/cache
 .sass-cache/
 /connect.lock

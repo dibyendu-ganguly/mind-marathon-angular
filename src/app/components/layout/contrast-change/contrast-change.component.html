@@ -1,0 +1,88 @@
+@if(mode == 'icon'){
+  <button type="button" mat-button [matMenuTriggerFor]="menu" aria-controls="contrast-options" aria-expanded="false"
+    class="icon-mode rounded-full bg-gradient-to-tr from-slate-800 to-slate-700 py-1 px-2 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none hidden md:block"
+    matTooltip="Change contrast">
+    <!-- <mat-icon size="12">settings_brightness</mat-icon> -->
+    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb" viewBox="0 0 16 16">
+      <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1"/>
+    </svg> -->
+    <span class="sr-only">Change brighness</span>
+    @switch (contrast()) {
+      @case ('-medium-contrast') {
+        <mat-icon>brightness_medium</mat-icon>
+      }
+      @case ('-high-contrast') {
+        <mat-icon>brightness_high</mat-icon>
+      }
+      @default {
+        <mat-icon>brightness_low</mat-icon>
+      }
+    }
+
+  </button>
+
+  <mat-menu #menu="matMenu">
+    @for (item of contrastOptions; track $index) {
+      <button mat-menu-item [value]="item[1]" [matTooltip]="'Switch to '+item[0]+' contrast'" (click)="changeContrast(item[1])">
+        {{item[0] | titlecase}}
+        <span class="sr-only">Switch to {{item[0]}} contrast</span>
+        @switch (item[1]) {
+          @case ('-medium-contrast') {
+            <mat-icon>brightness_medium</mat-icon>
+          }
+          @case ('-high-contrast') {
+            <mat-icon>brightness_high</mat-icon>
+          }
+          @default {
+            <mat-icon>brightness_low</mat-icon>
+          }
+        }
+      </button>
+    }
+  </mat-menu>
+
+  <!-- <div class="inline-flex rounded-md shadow-xs" role="group">
+  <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-s-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+    <svg class="w-3 h-3 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+    </svg>
+    Profile
+  </button>
+  <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border-t border-b border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+    <svg class="w-3 h-3 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"/>
+    </svg>
+    Settings
+  </button>
+  <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-e-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+    <svg class="w-3 h-3 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
+      <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
+    </svg>
+    Downloads
+  </button>
+</div> -->
+
+} @else {
+  <mat-button-toggle-group
+  [(ngModel)]="contrast" aria-label="Contrast" hideSingleSelectionIndicator="true" >
+  @for (item of contrastOptions; track $index) {
+    <mat-button-toggle [value]="item[1]" [matTooltip]="'Switch to '+item[0]+' contrast'">
+          @switch (item[1]) {
+            @case ('-medium-contrast') {
+              <mat-icon>brightness_medium</mat-icon>
+            }
+            @case ('-high-contrast') {
+              <mat-icon>brightness_high</mat-icon>
+            }
+            @default {
+              <mat-icon>brightness_low</mat-icon>
+            }
+          }
+      <span class="hidden sm:inline">
+        {{item[0] | titlecase}}
+      </span>
+    </mat-button-toggle>
+  }
+</mat-button-toggle-group>
+}

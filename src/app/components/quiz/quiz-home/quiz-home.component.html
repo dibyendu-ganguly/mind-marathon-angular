@@ -1,0 +1,21 @@
+<div class="p-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+    @for (item of list; track $index; let idx = $index, e = $even) {
+      <div class="col-span-1">
+        <mat-card class="italic h-full"
+          [class.!bg-secondary-container.!text-on-secondary-container]="!e"
+          [class.!bg-tertiary-container.!text-on-tertiary-container]="e">
+        <mat-card-header class="flex-grow">
+          <mat-card-title>
+            <strong>{{item.title}}</strong>
+          </mat-card-title>
+          <mat-card-subtitle class="h-14">{{item.desc}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions align="end">
+          <button mat-button class="px-2 italic font-semibold" [routerLink]="[item.buttonRoute]" >{{item.buttonText}}</button>
+        </mat-card-actions>
+      </mat-card>
+      </div>
+  }
+  </div>
+</div>

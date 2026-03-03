@@ -1,0 +1,166 @@
+<!-- <button (click)="getRole()">get</button>
+<button (click)="setRole()">set</button> -->
+<form id="quiz-form" scrollToFirsInvalidFormField [formGroup]="createQuizForm" novalidate>
+
+  <div class="py-4">
+    <mat-stepper linear="false" #stepper>
+      <mat-step [stepControl]="createQuizForm">
+        <ng-template matStepLabel>Create</ng-template>
+        <div class="container mx-auto md:px-24">
+            <mat-card class="shipping-card">
+              <!-- <mat-card-header>
+                <mat-card-title class="pb-4">Create Quiz</mat-card-title>
+              </mat-card-header> -->
+              <mat-card-content>
+                <div class="grid">
+                  <mat-form-field class="w-full mb-2">
+                    <mat-label>Quiz name</mat-label>
+                    <input matInput placeholder="Quiz Name" formControlName="quizName">
+                    <mat-error *ngIf="createQuizForm.controls['quizName'].hasError('required')">
+                      Quiz Name is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 sm:gap-4">
+                  <div class="grid grid-cols-2 gap-4 sm:col-span-2">
+                    <mat-form-field class="w-full mb-2">
+                      <mat-label>Quiz Date</mat-label>
+                      <input matInput [matDatepicker]="picker" formControlName="quizDateTime">
+                      <mat-hint>MM/DD/YYYY</mat-hint>
+                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi #picker></mat-datepicker>
+                      <mat-error *ngIf="createQuizForm.controls['quizDateTime'].hasError('required')">
+                        Date is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-full mb-2 ">
+                      <mat-label>Start Time</mat-label>
+                      <input matInput placeholder="Quiz Start Time" formControlName="quizTime" type="time">
+                      <mat-hint>HH:mm</mat-hint>
+                      <mat-error *ngIf="createQuizForm.controls['quizTime'].hasError('required')">
+                        Time is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <mat-form-field class="w-full mb-2">
+                    <mat-label>Duration</mat-label>
+                    <input matInput placeholder="Quiz Duration in Minutes" formControlName="duration" inputmode="numeric" pattern="[0-9]+">
+                    <mat-hint>in Minutes</mat-hint>
+                    <mat-error *ngIf="createQuizForm.controls['duration'].hasError('required')">
+                      Quiz Duration is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+
+                </div>
+                <div class="grid">
+                  <mat-form-field class="w-full mb-4">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput placeholder="Add Some Description..." formControlName="description"></textarea>
+                  </mat-form-field>
+                </div>
+
+                <app-question-block></app-question-block>
+
+                <div>
+                  <mat-divider></mat-divider>
+                  <button
+                    class="rounded-md border border-transparent py-2 px-4 my-4 text-center text-sm transition-all text-slate-600 hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" (click)="addQuestion(questions.value.length+1)" [matTooltip]="'Add question '+ (questions.value.length+1)"
+                    matTooltipShowDelay="500">
+                    + Add Question
+                  </button>
+                </div>
+                <!-- <div class="grid grid-cols-3 gap-8">
+                    <div class="col">
+                      <mat-form-field class="w-full">
+                        <input matInput placeholder="City" formControlName="city">
+                        <mat-error *ngIf="createQuizForm.controls['city'].hasError('required')">
+                          City is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col">
+                      <mat-form-field class="w-full">
+                        <mat-select placeholder="State" formControlName="state">
+                          <mat-option *ngFor="let state of states" [value]="state.abbreviation">
+                            {{ state.name }}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="createQuizForm.controls['state'].hasError('required')">
+                          State is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div> -->
+                <!-- <div class="grid grid-cols-3 gap-8">
+                    <div class="col">
+                      <mat-form-field class="w-full">
+                        <input matInput #postalCode maxlength="5" placeholder="Postal Code" type="number" formControlName="postalCode">
+                        <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+                      </mat-form-field>
+                    </div>
+                  </div> -->
+                <!-- <div class="grid grid-cols-3 gap-8">
+                    <div class="col">
+                      <mat-radio-group formControlName="shipping">
+                        <mat-radio-button value="free">Free Shipping</mat-radio-button>
+                        <mat-radio-button value="priority">Priority Shipping</mat-radio-button>
+                        <mat-radio-button value="nextday">Next Day Shipping</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div> -->
+              </mat-card-content>
+              <mat-card-actions class="justify-between">
+                <button [class]="class" type="button" type="button" >Back To Create Quiz Menu</button>
+                <button [class]="class" type="button" type="button" matStepperNext>Next</button>
+              </mat-card-actions>
+            </mat-card>
+        </div>
+
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Settings</ng-template>
+        <app-quiz-preview></app-quiz-preview>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button type="button" matStepperPrevious>Back</button>
+          <button mat-button type="button"(click)="stepper.reset()">Reset</button>
+          <button mat-button type="button" (click)="onSubmit()">Submit</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+
+</form>
+<span
+style="width: 90vw;
+padding: 10px;
+display: block;
+overflow: hidden;
+text-overflow: ellipsis;">
+  {{createQuizForm.value | json}}
+  <!-- {{createQuizForm.valid}}
+  error:{{createQuizForm.errors | json}} -->
+
+  <!-- {{questions.get([0,'file'])?.value |json}}
+
+  <div *ngFor="let item of questions.controls; let i=index">
+    {{i+1}} :> {{questions.get(i+'.question')?.hasError('required')}}
+  </div> -->
+</span>
+
+
+
+
+
+<ng-template #answerReqError let-value="value">
+  {{value}}
+  @if (value && value.answerControlError) {
+  <mat-error>
+    Answer for this question (Q.{{value.i+1}}) is <strong>required</strong>
+  </mat-error>
+  }
+</ng-template>

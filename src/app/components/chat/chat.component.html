@@ -1,0 +1,162 @@
+<div mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragBoundary="body" class="bg-primary">
+  <div class="flex justify-between align-center pt-2">
+    <button class="text-on-primary" aria-label="Move chat window" cdkDragHandle matTooltip="Move Chat Window">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move"
+        viewBox="0 0 16 16">
+        <path
+          d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10M.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8" />
+      </svg>
+    </button>
+    <div class="text-on-primary">
+      @if(isSocketConnnected()){
+      Chat : {{roomId()}}
+      } @else {
+      Hi {{myUserId}}
+      }
+    </div>
+    <div class="flex justify-end align-center gap-2">
+
+      <button class="text-on-primary" aria-label="Close chat window" matTooltip="Close Chat Window" mat-dialog-close>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+          class="bi bi-dash-square-dotted" viewBox="0 0 16 16">
+          <path
+            d="M2.5 0q-.25 0-.487.048l.194.98A1.5 1.5 0 0 1 2.5 1h.458V0zm2.292 0h-.917v1h.917zm1.833 0h-.917v1h.917zm1.833 0h-.916v1h.916zm1.834 0h-.917v1h.917zm1.833 0h-.917v1h.917zM13.5 0h-.458v1h.458q.151 0 .293.029l.194-.981A2.5 2.5 0 0 0 13.5 0m2.079 1.11a2.5 2.5 0 0 0-.69-.689l-.556.831q.248.167.415.415l.83-.556zM1.11.421a2.5 2.5 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415zM16 2.5q0-.25-.048-.487l-.98.194q.027.141.028.293v.458h1zM.048 2.013A2.5 2.5 0 0 0 0 2.5v.458h1V2.5q0-.151.029-.293zM0 3.875v.917h1v-.917zm16 .917v-.917h-1v.917zM0 5.708v.917h1v-.917zm16 .917v-.917h-1v.917zM0 7.542v.916h1v-.916zm15 .916h1v-.916h-1zM0 9.375v.917h1v-.917zm16 .917v-.917h-1v.917zm-16 .916v.917h1v-.917zm16 .917v-.917h-1v.917zm-16 .917v.458q0 .25.048.487l.98-.194A1.5 1.5 0 0 1 1 13.5v-.458zm16 .458v-.458h-1v.458q0 .151-.029.293l.981.194Q16 13.75 16 13.5M.421 14.89c.183.272.417.506.69.689l.556-.831a1.5 1.5 0 0 1-.415-.415zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373Q2.25 16 2.5 16h.458v-1H2.5q-.151 0-.293-.029zM13.5 16q.25 0 .487-.048l-.194-.98A1.5 1.5 0 0 1 13.5 15h-.458v1zm-9.625 0h.917v-1h-.917zm1.833 0h.917v-1h-.917zm1.834 0h.916v-1h-.916zm1.833 0h.917v-1h-.917zm1.833 0h.917v-1h-.917zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z" />
+        </svg>
+      </button>
+      @if(isSocketConnnected()) {
+        <button class="text-on-primary" aria-label="Leave group chat" matTooltip="Leave Group Chat" (click)="leaveRoom()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+          </svg>
+        </button>
+      }
+
+
+
+    </div>
+
+  </div>
+</div>
+<mat-dialog-content class="!pb-2">
+  <!-- <app-toast></app-toast> -->
+  @if(isSocketConnnected()){
+  <mat-tab-group (selectedTabChange)="selectedTabChange($event)">
+    <mat-tab label="Team Chat">
+      <ng-container *ngTemplateOutlet="chatbody"></ng-container>
+    </mat-tab>
+    <!-- <mat-tab label="Members">
+      <ng-container *ngTemplateOutlet="lobby"></ng-container>
+    </mat-tab> -->
+    <!-- <mat-tab label="Chat Notifications">
+      <ng-container *ngTemplateOutlet="notification"></ng-container>
+    </mat-tab> -->
+  </mat-tab-group>
+  } @else {
+  <div class="btn-container">
+    <div class="btn-row flex flex-col justify-center gap-2">
+      @if(toJoinRoom){
+      <mat-form-field class="no-subscript w-full">
+        <input matInput placeholder="Room code..." aria-describedby="Room code input box" [(ngModel)]="roomCodeToJoin"
+          (keydown.enter)="joinBtn.click()" cdkFocusInitial />
+      </mat-form-field>
+      <button #joinBtn aria-label="Join room"
+        class="bg-primary text-on-primary rounded-full bg-gradient-to-tr from-slate-800 to-slate-700 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        (click)="joinRoom()">
+        Join
+      </button>
+      <button aria-label="Go back"
+        class="bg-secondary text-on-primary rounded-full bg-gradient-to-tr from-slate-800 to-slate-700 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        (click)="toJoinRoom = false">
+        Back
+      </button>
+      } @else {
+
+      <button cdkFocusInitial aria-label="Create room"
+        class="bg-primary text-on-primary rounded-full bg-gradient-to-tr from-slate-800 to-slate-700 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        (click)="createRoom()">
+        Create room
+      </button>
+      <button aria-label="Join room"
+        class="bg-primary text-on-primary rounded-full bg-gradient-to-tr from-slate-800 to-slate-700 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        (click)="toJoinRoom = true">
+        Join room
+      </button>
+      }
+    </div>
+  </div>
+  }
+
+</mat-dialog-content>
+@if(isSocketConnnected()){
+
+<app-typing></app-typing>
+<div class="flex justify-between p-4 pt-2 gap-2 op" [class.opacity-0]="tabIndex">
+  <mat-form-field class="no-subscript w-full">
+    <input matInput placeholder="Message..." aria-describedby="Message box" [(ngModel)]="newMessage" cdkFocusInitial
+      (keydown)="sendTypingNotification()" (keydown.enter)="sendBtn.click()" />
+  </mat-form-field>
+  <button mat-button
+  class="bg-primary px-4 text-on-primary rounded-lg bg-gradient-to-tr from-slate-800 to-slate-700 py-2 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+  aria-label="Send Message" #sendBtn [disabled]="!newMessage" (click)="sendMessage()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-send"
+      viewBox="0 0 16 16">
+      <path
+        d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+    </svg>
+  </button>
+
+  <!--
+      <button mat-button (click)="onNoClick()">No Thanks</button>
+      <button mat-button [mat-dialog-close]="animal()" cdkFocusInitial>Ok</button> -->
+</div>
+}
+
+<ng-template #chatbody>
+  <div class="chat-body tab-body" #chatBodyContainer>
+    @for (message of previousMessages; track $index) {
+    @let isMe = myUserId === message.senderId;
+    @if(!isMe){
+    <div class="flex justify-start items-center gap-1">
+
+      @if(message.senderImgUrl){
+        <img class="profile" [src]="message.senderImgUrl" [class.right]="isMe" [class.left]="!isMe" alt="Avatar">
+      } @else {
+        <!--Default profile image svg-->
+        <span clas="relative">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+          </svg>
+        </span>
+      }
+
+      <span [class.left]="isMe" [class.right]="!isMe">
+        {{message.senderName}}
+      </span>
+    </div>
+
+    }
+    <div class="chat-container mb-1 p-1" [class.ml-4]="isMe" [class.darker]="!isMe" [class.mr-4]="!isMe">
+
+      <p>{{message.message}}</p>
+      <span [class.time-left]="isMe" [class.time-right]="!isMe">
+        {{message.sentTime | date: 'hh:mm'}}
+      </span>
+    </div>
+    }
+  </div>
+</ng-template>
+
+
+<ng-template #lobby>
+  <div class="lobby-body tab-body">
+    <app-members-list/>
+  </div>
+</ng-template>
+
+<ng-template #notification>
+  <div class="notification-body tab-body">
+    lobby
+  </div>
+</ng-template>
