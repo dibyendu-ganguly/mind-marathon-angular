@@ -7,6 +7,7 @@ import { ToastComponent } from '../components/shared/toast/toast.component';
 import { AuthService } from './auth.service';
 import { ChatConstants } from '../constants/chat.constants';
 import { ChatMessageModel, SOCKET_EVENTS, ServerEvent, UserMessage } from '../models/chat.models';
+import { StorageService } from './storage.service';
 
 
 @Injectable({
@@ -21,14 +22,16 @@ export class ChatService {
   private message$: Subject<string> = new Subject();
   socket: Socket = io(environment.backendUrl);
 
+  private storage: StorageService = inject(StorageService);
+
   roomId = signal<string | null>(null);
   roomConnected = computed(() => {
     const roomId = this.roomId();
     if (!!roomId) {
-      localStorage.setItem('roomId',roomId);
+      this.storage.setItem('roomId',roomId);
       return true;
     }
-    localStorage.removeItem('roomId');
+    this.storage.removeItem('roomId');
     return false;
   });
   roomUsers = signal<string[]>([]);

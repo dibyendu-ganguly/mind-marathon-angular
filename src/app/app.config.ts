@@ -6,6 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient } from '@angular/common/http';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideClientHydration } from '@angular/platform-browser';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'enabled',
@@ -18,6 +19,7 @@ const inMemoryScrollingFeature: InMemoryScrollingFeature =
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     provideRouter(routes, withHashLocation(), inMemoryScrollingFeature),
     provideHttpClient(),
     provideAnimationsAsync(),

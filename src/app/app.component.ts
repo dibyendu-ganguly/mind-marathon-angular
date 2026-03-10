@@ -14,16 +14,16 @@ import { DOCUMENT } from '@angular/common';
 import { FullScreenModeListenerDirective } from './directives/full-screen-mode-listener.directive';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, NavigationHeaderComponent,
-    CommonModule, FormsModule
-    // TestPlaceholderComponent
-    , FullScreenModeListenerDirective
-    , ChatButtonComponent
-    , FooterComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [RouterOutlet, NavigationHeaderComponent,
+        CommonModule, FormsModule
+        // TestPlaceholderComponent
+        ,
+        // FullScreenModeListenerDirective,
+        ChatButtonComponent,
+        FooterComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
 

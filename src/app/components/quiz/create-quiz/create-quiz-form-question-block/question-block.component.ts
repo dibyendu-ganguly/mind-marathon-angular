@@ -34,27 +34,26 @@ import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'app-question-block',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatIconModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDividerModule,
-    MatTooltipModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatButtonToggleModule,
-    TextFieldModule,
-  ],
-  templateUrl: './question-block.component.html',
-  styleUrl: './question-block.component.scss',
-  animations: [QuestionAddAnimation],
+    selector: 'app-question-block',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDividerModule,
+        MatTooltipModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatButtonToggleModule,
+        TextFieldModule,
+    ],
+    templateUrl: './question-block.component.html',
+    styleUrl: './question-block.component.scss',
+    animations: [QuestionAddAnimation]
 })
 export class QuestionBlockComponent implements OnInit {
   createQuizForm!: FormGroup<QuizForm>;

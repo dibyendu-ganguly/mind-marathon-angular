@@ -4,13 +4,12 @@ import { ChatComponent } from '../../chat/chat.component';
 import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'app-chat-button',
-  standalone: true,
-  imports: [
-    CdkDrag
-  ],
-  templateUrl: './chat-button.component.html',
-  styleUrl: './chat-button.component.scss'
+    selector: 'app-chat-button',
+    imports: [
+        CdkDrag
+    ],
+    templateUrl: './chat-button.component.html',
+    styleUrl: './chat-button.component.scss'
 })
 export class ChatButtonComponent {
 

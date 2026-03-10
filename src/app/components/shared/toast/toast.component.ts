@@ -6,11 +6,10 @@ export interface ToastData{
   type: 'success'|'error';
 }
 @Component({
-  selector: 'app-toast',
-  standalone: true,
-  imports: [MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
-  templateUrl: './toast.component.html',
-  styleUrl: './toast.component.scss'
+    selector: 'app-toast',
+    imports: [MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
+    templateUrl: './toast.component.html',
+    styleUrl: './toast.component.scss'
 })
 export class ToastComponent implements OnInit {
 

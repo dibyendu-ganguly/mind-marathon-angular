@@ -6,11 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
-  selector: 'app-theme-toggle',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatTooltipModule, MatButtonToggleModule],
-  templateUrl: './theme-toggle.component.html',
-  styleUrl: './theme-toggle.component.scss'
+    selector: 'app-theme-toggle',
+    imports: [CommonModule, FormsModule, MatTooltipModule, MatButtonToggleModule],
+    templateUrl: './theme-toggle.component.html',
+    styleUrl: './theme-toggle.component.scss'
 })
 export class ThemeToggleComponent {
 

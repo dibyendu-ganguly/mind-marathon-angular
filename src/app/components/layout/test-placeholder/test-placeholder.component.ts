@@ -26,12 +26,11 @@ export interface State {
   population: string;
 }
 @Component({
-  selector: 'app-test-placeholder',
-  standalone: true,
-  imports: [CommonModule, MatCheckboxModule, ReactiveFormsModule, MatAutocompleteModule, MatButtonModule,MatSlideToggleModule,MatFormFieldModule, MatSelectModule, MatTableModule, MatIconModule, MatInputModule, MatTabsModule, MatDatepickerModule],
-  providers: [provideNativeDateAdapter()],
-  templateUrl: './test-placeholder.component.html',
-  styleUrl: './test-placeholder.component.scss'
+    selector: 'app-test-placeholder',
+    imports: [CommonModule, MatCheckboxModule, ReactiveFormsModule, MatAutocompleteModule, MatButtonModule, MatSlideToggleModule, MatFormFieldModule, MatSelectModule, MatTableModule, MatIconModule, MatInputModule, MatTabsModule, MatDatepickerModule],
+    providers: [provideNativeDateAdapter()],
+    templateUrl: './test-placeholder.component.html',
+    styleUrl: './test-placeholder.component.scss'
 })
 
 export class TestPlaceholderComponent {

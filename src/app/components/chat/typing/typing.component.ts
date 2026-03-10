@@ -5,11 +5,10 @@ import { ChatConstants } from '../../../constants/chat.constants';
 
    
 @Component({
-  selector: 'app-typing',
-  standalone: true,
-  imports: [],
-  templateUrl: './typing.component.html',
-  styleUrl: './typing.component.scss'
+    selector: 'app-typing',
+    imports: [],
+    templateUrl: './typing.component.html',
+    styleUrl: './typing.component.scss'
 })
 export class TypingComponent implements OnInit {
   

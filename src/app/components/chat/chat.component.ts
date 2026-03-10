@@ -21,15 +21,14 @@ export interface ChatComponentDialogData {
 }
 
 @Component({
-  selector: 'app-chat',
-  standalone: true,
-  imports: [MatDialogModule, MatFormFieldModule, FormsModule, MatInputModule,
-    A11yModule,
-    MatTooltipModule, MembersListComponent,
-    CdkDrag, CdkDragHandle, MatTabsModule, NgTemplateOutlet, TypingComponent, DatePipe
-  ],
-  templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+    selector: 'app-chat',
+    imports: [MatDialogModule, MatFormFieldModule, FormsModule, MatInputModule,
+        A11yModule,
+        MatTooltipModule, MembersListComponent,
+        CdkDrag, CdkDragHandle, MatTabsModule, NgTemplateOutlet, TypingComponent, DatePipe
+    ],
+    templateUrl: './chat.component.html',
+    styleUrl: './chat.component.scss'
 })
 export class ChatComponent implements OnInit {
 

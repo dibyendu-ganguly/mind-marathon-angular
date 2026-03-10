@@ -18,26 +18,25 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 @Component({
-  selector: 'app-quiz-preview',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatCardModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTooltipModule,
-    MatButtonModule,
-    TitleCasePipe,
-    DatePipe,
-    CdkAccordionModule,
-    MatTabsModule,
-    MatStepperModule,
-    CdkDropList,CdkDrag,CdkDragHandle,CdkDragPlaceholder, CdkDragPreview,
-    MatSlideToggleModule
-  ],
-  templateUrl: './quiz-preview.component.html',
-  styleUrl: './quiz-preview.component.scss'
+    selector: 'app-quiz-preview',
+    imports: [
+        ReactiveFormsModule,
+        MatCardModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTooltipModule,
+        MatButtonModule,
+        TitleCasePipe,
+        DatePipe,
+        CdkAccordionModule,
+        MatTabsModule,
+        MatStepperModule,
+        CdkDropList, CdkDrag, CdkDragHandle, CdkDragPlaceholder, CdkDragPreview,
+        MatSlideToggleModule
+    ],
+    templateUrl: './quiz-preview.component.html',
+    styleUrl: './quiz-preview.component.scss'
 })
 export class QuizPreviewComponent implements OnInit{
 

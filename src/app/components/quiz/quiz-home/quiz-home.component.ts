@@ -9,14 +9,13 @@ export interface QuizHomeList{
   buttonRoute:string;
 }
 @Component({
-  selector: 'app-quiz-home',
-  standalone: true,
-  imports: [
-    RouterModule,
-    MatCardModule
-  ],
-  templateUrl: './quiz-home.component.html',
-  styleUrl: './quiz-home.component.scss'
+    selector: 'app-quiz-home',
+    imports: [
+        RouterModule,
+        MatCardModule
+    ],
+    templateUrl: './quiz-home.component.html',
+    styleUrl: './quiz-home.component.scss'
 })
 export class QuizHomeComponent {
   list : QuizHomeList[]= [

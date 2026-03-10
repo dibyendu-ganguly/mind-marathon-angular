@@ -23,11 +23,10 @@ const MOCK_APP_LANG : AppLang[] = [
   }
 ];
 @Component({
-  selector: 'app-language-selector',
-  standalone: true,
-  imports: [MatTooltipModule, MatMenuModule],
-  templateUrl: './language-selector.component.html',
-  styleUrl: './language-selector.component.scss'
+    selector: 'app-language-selector',
+    imports: [MatTooltipModule, MatMenuModule],
+    templateUrl: './language-selector.component.html',
+    styleUrl: './language-selector.component.scss'
 })
 export class LanguageSelectorComponent {
   availableLanguages : AppLang[] = MOCK_APP_LANG;

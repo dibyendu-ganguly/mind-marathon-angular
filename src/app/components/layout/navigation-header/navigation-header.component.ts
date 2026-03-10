@@ -15,15 +15,14 @@ import { UserDropdownMenuComponent } from '../user-dropdown-menu/user-dropdown-m
 export type ProgressMode = 'determinate'|'indeterminate';
 
 @Component({
-  selector: 'app-navigation-header',
-  standalone: true,
-  imports: [
-    CommonModule, FormsModule, MatTooltipModule, MatButtonToggleModule, ThemeToggleComponent,ContrastChangeComponent, LanguageSelectorComponent , RouterModule, MatProgressBarModule
-    , UserDropdownMenuComponent
-  ],
-  templateUrl: './navigation-header.component.html',
-  styleUrl: './navigation-header.component.scss',
-  animations: [ToggleAnimation]
+    selector: 'app-navigation-header',
+    imports: [
+        CommonModule, FormsModule, MatTooltipModule, MatButtonToggleModule, ThemeToggleComponent, ContrastChangeComponent, LanguageSelectorComponent, RouterModule, MatProgressBarModule,
+        UserDropdownMenuComponent
+    ],
+    templateUrl: './navigation-header.component.html',
+    styleUrl: './navigation-header.component.scss',
+    animations: [ToggleAnimation]
 })
 export class NavigationHeaderComponent {
   mode = input.required<ProgressMode>();

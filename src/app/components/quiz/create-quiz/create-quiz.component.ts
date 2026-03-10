@@ -9,16 +9,15 @@ import { RouterModule } from '@angular/router';
 export type CreateQuizCompViewTypes = 'start' | 'import' | 'form'
 
 @Component({
-  selector: 'app-create-quiz',
-  standalone: true,
-  imports: [
-    RouterModule,
-    CreateQuizFormComponent,
-    CreateQuizImportComponent,
-    // IconButtonComponent,
-  ],
-  templateUrl: './create-quiz.component.html',
-  styleUrl: './create-quiz.component.scss'
+    selector: 'app-create-quiz',
+    imports: [
+        RouterModule,
+        CreateQuizFormComponent,
+        CreateQuizImportComponent,
+        // IconButtonComponent,
+    ],
+    templateUrl: './create-quiz.component.html',
+    styleUrl: './create-quiz.component.scss'
 })
 export class CreateQuizComponent implements OnInit {
 

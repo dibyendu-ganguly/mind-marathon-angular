@@ -8,11 +8,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
-  selector: 'app-contrast-change',
-  standalone: true,
-  imports: [TitleCasePipe, MatIconModule, MatButtonToggleModule, FormsModule, MatTooltipModule, MatMenuModule],
-  templateUrl: './contrast-change.component.html',
-  styleUrl: './contrast-change.component.scss'
+    selector: 'app-contrast-change',
+    imports: [TitleCasePipe, MatIconModule, MatButtonToggleModule, FormsModule, MatTooltipModule, MatMenuModule],
+    templateUrl: './contrast-change.component.html',
+    styleUrl: './contrast-change.component.scss'
 })
 export class ContrastChangeComponent {
 

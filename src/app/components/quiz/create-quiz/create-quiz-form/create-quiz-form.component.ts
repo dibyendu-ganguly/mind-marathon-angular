@@ -24,32 +24,31 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import { QuizPreviewComponent } from '../quiz-preview/quiz-preview.component';
 
 @Component({
-  selector: 'app-create-quiz-form',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDatepickerModule, MatNativeDateModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatStepperModule,
-    MatTooltipModule,
-    QuestionBlockComponent,
-    QuizPreviewComponent,
-    ReactiveFormsModule,
-    ScrollToFirstInvalidFormFieldDirective,
-    MatFormFieldModule
-  ],
-   providers: [provideNativeDateAdapter()],
-  templateUrl: './create-quiz-form.component.html',
-  styleUrl: './create-quiz-form.component.scss'
+    selector: 'app-create-quiz-form',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDatepickerModule, MatNativeDateModule,
+        MatDialogModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatStepperModule,
+        MatTooltipModule,
+        QuestionBlockComponent,
+        QuizPreviewComponent,
+        ReactiveFormsModule,
+        ScrollToFirstInvalidFormFieldDirective,
+        MatFormFieldModule
+    ],
+    providers: [provideNativeDateAdapter()],
+    templateUrl: './create-quiz-form.component.html',
+    styleUrl: './create-quiz-form.component.scss'
 })
 export class CreateQuizFormComponent implements OnInit {
 
