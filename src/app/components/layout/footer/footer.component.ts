@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ExternalLinks } from '../../../constants/layout.constants';
+import { EXTERNAL_LINKS, RESOURCES } from '../../../constants/layout.constants';
 
 @Component({
     selector: 'app-footer',
@@ -8,5 +8,7 @@ import { ExternalLinks } from '../../../constants/layout.constants';
     styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  externalLinks = ExternalLinks
+  externalLinks = EXTERNAL_LINKS
+  resources = RESOURCES
+  readonly thisYear = new Date().getFullYear();
 }

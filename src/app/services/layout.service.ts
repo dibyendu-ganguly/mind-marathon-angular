@@ -29,7 +29,7 @@ export class ThemeService {
   googleTranslatorHidden = signal(true);
 
   getTheme(){
-    return this.theme();
+    return this.theme;
   }
   themeEffect = effect(()=>{
     const classList = document.documentElement.classList;

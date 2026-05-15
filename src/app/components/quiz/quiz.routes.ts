@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { createQuizGuard } from './create-quiz/create-quiz.guards';
 
 const quizRoutes: Routes = [
   // { path: '', redirectTo:'create'},
@@ -8,7 +9,7 @@ const quizRoutes: Routes = [
     children:[
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', loadComponent: () => import('./quiz-home/quiz-home.component').then((m) => m.QuizHomeComponent) },
-      { path: 'create', loadComponent: () => import('./create-quiz/create-quiz.component').then((m) => m.CreateQuizComponent) },
+      { path: 'create', loadComponent: () => import('./create-quiz/create-quiz.component').then((m) => m.CreateQuizComponent), canActivate: [createQuizGuard]},
       { path: 'view', loadComponent: () => import('./view-quiz/view-quiz.component').then((m) => m.ViewQuizComponent) },
     ]
   },

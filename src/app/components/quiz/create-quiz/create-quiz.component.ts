@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { CreateQuizFormComponent } from './create-quiz-form/create-quiz-form.component';
 import { CreateQuizImportComponent } from './create-quiz-import/create-quiz-import.component';
@@ -26,8 +26,12 @@ export class CreateQuizComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  class = TextButtonClassList + ' w-full';
-  view : WritableSignal<CreateQuizCompViewTypes> = this.quizService.createQuizView;
+  class = TextButtonClassList('primary') + ' w-full';
+  view : Signal<CreateQuizCompViewTypes> = this.quizService.createQuizView;
+
+  updateCreateQuizView(view: CreateQuizCompViewTypes){
+    this.quizService.updateCreateQuizView(view);
+  }
 
 }
 

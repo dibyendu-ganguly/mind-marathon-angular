@@ -20,7 +20,7 @@ export class ChatService {
   serverMessageList :string[] = [];
 
   private message$: Subject<string> = new Subject();
-  socket: Socket = io(environment.backendUrl);
+  socket: Socket = io(environment.backendUrl, {autoConnect:false});
 
   private storage: StorageService = inject(StorageService);
 

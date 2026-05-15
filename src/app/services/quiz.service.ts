@@ -1,20 +1,44 @@
 import { DomSanitizer } from '@angular/platform-browser';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionForm, AnswerType, QuizForm, Options, QuizRoundsForm } from '../models/quiz.model';
 import { CreateQuizCompViewTypes } from '../components/quiz/create-quiz/create-quiz.component';
+import { ConfirmDialogData } from '../components/shared/confirm-dialog/confirm-dialog.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
 
-  createQuizView = signal<CreateQuizCompViewTypes>('start');
+  private _createQuizView = signal<CreateQuizCompViewTypes>('start');
+  readonly createQuizView = this._createQuizView.asReadonly();
+  updateCreateQuizView(view: CreateQuizCompViewTypes){
+    this._createQuizView.set(view);
+  }
+  createQuizCanActivateConfirmDialogData = computed<ConfirmDialogData|undefined>(()=>{
+    if(this.createQuizView() === 'import'){
+      return {
+        title: 'Continue importing or Change mode?',
+        message: 'Do you want to continue to the previous import or switch to another mode?',
+        cancelBtnText: 'Switch Mode',
+        confirmBtnText: 'Continue'
+      };
+    } else if(this.createQuizView() === 'form') {
+      return {
+        title: 'Change mode?',
+        message: 'You have unsaved changes in the quiz form. Do you want to switch to other mode now?',
+        cancelBtnText: 'Switch Mode',
+        confirmBtnText: 'Keep Editing form!'
+      };
+    }
+    return;
+  });
 
   constructor() { }
 
   fb = inject(FormBuilder);
   createQuizForm = this.getInitialForm();
+
 
   private getInitialForm() : FormGroup<QuizForm> {
     return this.fb.group({

@@ -1,12 +1,13 @@
+{{view()}}
 @switch (view()) {
 @case('start'){
 <div class="absolute left-[50%] -translate-x-1/2 top-[20%]">
   <button [class]="class + ' bg-surface text-on-surface'" [routerLink]="['../home']" >&lt; Back</button>
 </div>
 <div class="relative top-[50%] -translate-y-1/2 px-4 sm:px-12 md:px-32 lg:px-72 flex flex-col gap-3 items-center">
-  <button [class]="class" (click)="view.set('import')">Import</button>
+  <button [class]="class" (click)="updateCreateQuizView('import')">Import</button>
   <span>or</span>
-  <button [class]="class" (click)="view.set('form')">Create</button>
+  <button [class]="class" (click)="updateCreateQuizView('form')">Create</button>
 </div>
 }
 @case('form'){

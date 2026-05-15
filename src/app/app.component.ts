@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
 
     // Set loading state to false in both of the below events to hide the spinner in case a request fails
     if (event instanceof NavigationCancel) {
-      this.mode.set('indeterminate');
+      this.mode.set('determinate');
     }
     if (event instanceof NavigationError) {
       this.mode.set('determinate');
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
-    document.documentElement.classList.add(this.themeService.getTheme());
+    document.documentElement.classList.add(this.themeService.getTheme()());
 
     this.themeService.elem = document.documentElement;
     this.themeService.document= this.document;

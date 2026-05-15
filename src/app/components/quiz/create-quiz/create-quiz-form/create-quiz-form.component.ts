@@ -52,7 +52,7 @@ import { QuizPreviewComponent } from '../quiz-preview/quiz-preview.component';
 })
 export class CreateQuizFormComponent implements OnInit {
 
-  class = TextButtonClassList;
+  class = TextButtonClassList('primary');
 
   constructor(private quizService: QuizService) { }
   ngOnInit(): void {

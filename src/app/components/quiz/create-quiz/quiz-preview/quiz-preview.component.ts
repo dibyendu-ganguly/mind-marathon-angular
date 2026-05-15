@@ -32,7 +32,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
         CdkAccordionModule,
         MatTabsModule,
         MatStepperModule,
-        CdkDropList, CdkDrag, CdkDragHandle, CdkDragPlaceholder, CdkDragPreview,
+        CdkDropList, CdkDrag, CdkDragHandle, CdkDragPlaceholder,// CdkDragPreview,
         MatSlideToggleModule
     ],
     templateUrl: './quiz-preview.component.html',
@@ -52,7 +52,7 @@ export class QuizPreviewComponent implements OnInit{
   selectedQuestion : QuestionForm | null = null;
   selectedQuestionIndex !: number|undefined;
 
-  txtBtnclass = TextButtonClassList;
+  txtBtnclass = TextButtonClassList('primary');
   iconBtnClass = IconButtonClassList;
 
   get questions() {

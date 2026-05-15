@@ -1,4 +1,5 @@
 import { Directive, ElementRef, HostListener, inject } from '@angular/core';
+import { CommonService } from '../services/common.service';
 
 @Directive({
   selector: '[scrollToFirsInvalidFormField]',
@@ -6,7 +7,9 @@ import { Directive, ElementRef, HostListener, inject } from '@angular/core';
   standalone: true,
 })
 export class ScrollToFirstInvalidFormFieldDirective {
-  private readonly elementRef = inject(ElementRef);
+  private readonly elementRef: ElementRef<any> = inject(ElementRef);
+  private commonService = inject(CommonService);
+
 
   @HostListener('ngSubmit')
   onSubmit(): void {
@@ -14,27 +17,21 @@ export class ScrollToFirstInvalidFormFieldDirective {
   }
 
   private scrollToFirstInvalidField(): void {
-    const invalidFields = this.elementRef.nativeElement.querySelectorAll('.mat-mdc-form-field.ng-invalid');
-    const firstInvalidField = invalidFields[0];
 
-    if (!firstInvalidField) {
-      return;
-    }
+    const firstInvalidField = this.commonService.scrollToElementByQuery(this.elementRef, '.mat-mdc-form-field.ng-invalid');
 
-    firstInvalidField.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    });
+    if (firstInvalidField) {
+      firstInvalidField.classList.add('ng-dirty');
 
-    firstInvalidField.classList.add('ng-dirty');
-    const input = firstInvalidField.querySelector('input');
-    const textarea = firstInvalidField.querySelector('textarea');
+      const input = firstInvalidField.querySelector('input');
+      const textarea = firstInvalidField.querySelector('textarea');
 
-    if(input || textarea){
-      setTimeout(() => {
-        input?.focus();
-        textarea?.focus();
-      }, 500);
+      if(input || textarea){
+        setTimeout(() => {
+          input?.focus();
+          textarea?.focus();
+        }, 500);
+      }
     }
   }
 }

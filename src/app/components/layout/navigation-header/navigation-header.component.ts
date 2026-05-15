@@ -29,4 +29,13 @@ export class NavigationHeaderComponent {
 
   private themeService = inject(ThemeService);
   googleTranslatorHidden = this.themeService.googleTranslatorHidden;
+
+  x = "\u003Cp\u003EThe \u003Cb\u003E2025 World Figure Skating Championships\u003C/b\u003E were held from March 26 to 30 at the TD Garden in Boston, Massachusetts, in the United States. Sanctioned by the International Skating Union (ISU), the World Championships are considered the most prestigious event in figure skating. Medals were awarded in men's singles, women's singles, pair skating, and ice dance. The competition determined the entry quotas for each skating federation to the 2026 Winter Olympics. Ilia Malinin and Alysa Liu, both of the United States, won the men's and women's events, respectively. Riku Miura and Ryuichi Kihara of Japan won the pairs event, and Madison Chock and Evan Bates of the United States won the ice dance event.\u003C/p\u003E"
+  navigationItems = [
+    { label: 'Home', link: '/' },
+    { label: 'Quiz', link: '/quiz' },
+    { label: 'Events', link: '/events' },
+    { label: 'Services', link: '/services' },
+    { label: 'Contact', link: '/contact' }
+  ];
 }
