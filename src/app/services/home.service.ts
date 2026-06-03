@@ -30,7 +30,7 @@ export class HomeService {
   updateTodayDate(day: number, monthInWords: string){
     console.log({day, monthInWords});
     const monthNumber = Object.entries(MONTH_MAP).find(([_, month]) => month === monthInWords)?.[0];
-    if(!monthNumber || (day === this.todayDay()) || (monthInWords === this.todayMonthInWords())) return;
+    if(!monthNumber || (day === this.todayDay() && monthInWords === this.todayMonthInWords())) return;
     const newDate = new Date();
     newDate.setDate(day);
     newDate.setMonth(parseInt(monthNumber) - 1);

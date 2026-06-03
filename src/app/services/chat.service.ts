@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 import { ChatConstants } from '../constants/chat.constants';
 import { ChatMessageModel, SOCKET_EVENTS, ServerEvent, UserMessage } from '../models/chat.models';
 import { StorageService } from './storage.service';
+import { error } from 'console';
 
 
 @Injectable({
@@ -76,19 +77,40 @@ export class ChatService {
     }
   }
 
-  isServerDisconnected(){
-    const isConnected = this.socket.connected
-    if(!isConnected){
+  isServerDisconnected(reconnect = true){
+    if(!this.socket.connected){
       this.pushServerAlertMsg('Server disconnected');
+      if(reconnect){
+        let retryCount = 5;
+        while(retryCount > 0){
+          try {
+            this.socket.connect();
+            //If the connection is successful, exit the loop
+            if(this.socket.connected){
+              this.pushServerAlertMsg('Reconnected to server');
+              break;
+            }
+
+            throw new Error('Connection attempt failed.');
+          } catch (error) {
+            retryCount--;
+            this.pushServerAlertMsg(`${error} Trying to reconnect. Retries left: ${retryCount}`);
+          } finally {
+            if(retryCount === 0){
+              this.pushServerAlertMsg('Unable to connect to server. Please check your connection and try again later.');
+            }
+          }
+        }
+      }
     }
-    // this.socket.connect();
-    return !isConnected;
+
+    return !this.socket.connected;
   }
   createRoom(myUserId: string) {
-    if(this.isServerDisconnected()){
+    if (this.roomConnected()) {
       return;
     }
-    if (this.roomConnected()) {
+    if(this.isServerDisconnected()){
       return;
     }
     this.socket.emit(SOCKET_EVENTS.CreateRoom,
@@ -104,10 +126,11 @@ export class ChatService {
   }
 
   joinRoom(myUserId: string, roomId: string, forceJoin = false) {
-    if(this.isServerDisconnected()){
+
+    if (this.roomConnected()) {
       return;
     }
-    if (this.roomConnected()) {
+    if(this.isServerDisconnected()){
       return;
     }
     console.log(myUserId, roomId);
@@ -138,7 +161,7 @@ export class ChatService {
   }
 
   leaveRoom(myUserId: string) {
-    if(this.isServerDisconnected()){
+    if(this.isServerDisconnected(false)){
       return;
     }
     if(this.roomConnected()){

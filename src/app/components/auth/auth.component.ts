@@ -4,8 +4,9 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
-import { AUTH_CONSTANTS, TextButtonClassList } from '../../constants/layout.constants';
+import { TextButtonClassList } from '../../constants/layout.constants';
 import { AuthService } from '../../services/auth.service';
+import { AUTH_CONSTANTS } from '../../constants/auth.constants';
 
 
 @Component({

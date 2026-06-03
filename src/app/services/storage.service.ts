@@ -1,13 +1,14 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 
+export const STORAGE_TYPE : 'localStorage' | 'sessionStorage' = 'localStorage';
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
 
   constructor(@Inject(DOCUMENT) private document: Document) { }
-  private readonly storage = this.document.defaultView?.localStorage;
+  private readonly storage = this.document.defaultView?.[STORAGE_TYPE];
 
   setItem(key: string, value: string): void {
 

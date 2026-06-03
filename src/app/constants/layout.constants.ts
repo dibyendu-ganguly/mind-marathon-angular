@@ -22,7 +22,3 @@ export const RESOURCES = [
     url: 'https://quiz.mygov.in/'
   }
 ] as const;
-
-export const AUTH_CONSTANTS = {
-  googleBtnId: 'google-btn',
-} as const;

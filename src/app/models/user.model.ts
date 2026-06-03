@@ -1,7 +1,8 @@
 export interface User {
   name: string;
   email: string;
-  password: string;
+  authMode: 'google' | 'email' ;
+  authVerifier: string;
   roles: string[];
   isActive: boolean;
   lastLogin: number;
