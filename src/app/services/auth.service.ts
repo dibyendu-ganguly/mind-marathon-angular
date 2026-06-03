@@ -1,9 +1,9 @@
-import { StorageService } from './storage.service';
+import { STORAGE_TYPE, StorageService } from './storage.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Settings, User } from './../models/user.model';
 import { computed, inject, Injectable, NgZone, signal, WritableSignal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { AUTH_CONSTANTS } from '../constants/layout.constants';
+import { AUTH_CONSTANTS } from '../constants/auth.constants';
 
 export declare var google: any;
 @Injectable({
@@ -20,18 +20,18 @@ export class AuthService {
 
   setUser(user:User) {
     this._user.set({...user});
-    this.storageService.setItem('user', JSON.stringify(user));
-    console.log("User set in AuthService:", user, this.storageService.getItem('user'));
+    this.storageService.setItem(AUTH_CONSTANTS.userStorageKey, JSON.stringify(user));
+    console.log("User set in AuthService:", user, this.storageService.getItem(AUTH_CONSTANTS.userStorageKey));
   }
 
   clearUser() {
     this._user.set(null);
-    this.storageService.removeItem('user');
+    this.storageService.removeItem(AUTH_CONSTANTS.userStorageKey);
   }
 
   get user() {
     // return MOCK_USER;
-    return this._user || JSON.parse(this.storageService.getItem('user') ?? 'null');
+    return this._user || JSON.parse(this.storageService.getItem(AUTH_CONSTANTS.userStorageKey) ?? 'null');
   }
 
   isAuthenticated = computed(() => this.user() !== null);
@@ -63,19 +63,19 @@ export class AuthService {
     if(environment.config?.googleClientId) {
       google.accounts.id.initialize({
         client_id: environment.config?.googleClientId ,
-        callback: this.handleCredentialResponse.bind(this),
+        callback: this.handleGoogleSignInCredentialResponse.bind(this),
       });
 
-      this.renderResponsiveButton();
+      this.renderGoogleSignInResponsiveButton();
       let resizeTimeout : ReturnType<typeof setTimeout>  = setTimeout(() => '', 1000);
       window.addEventListener("resize", () => {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(this.renderResponsiveButton, 150);
+        resizeTimeout = setTimeout(this.renderGoogleSignInResponsiveButton, 150);
       });
     }
   }
 
-  renderResponsiveButton() {
+  renderGoogleSignInResponsiveButton() {
     const container = document.getElementById(AUTH_CONSTANTS.googleBtnId);
 
     // Capture current container width (clamped within Google's 400px maximum constraint)
@@ -93,7 +93,7 @@ export class AuthService {
   }
 
   /** This function is called when the user successfully signs in with Google */
-  handleCredentialResponse(response: any) {
+  handleGoogleSignInCredentialResponse(response: any) {
     const decodeJWT = (token:string) => {
 
       const base64Url = token.split(".")[1];
@@ -115,7 +115,7 @@ export class AuthService {
 
       const responsePayload = decodeJWT(response.credential);
 
-      console.log("Decoded JWT ID token fields:");
+      console.log("Decoded JWT ID token fields:",responsePayload);
       console.log("  Full Name: " + responsePayload.name);
       console.log("  Given Name: " + responsePayload.given_name);
       console.log("  Family Name: " + responsePayload.family_name);
@@ -125,7 +125,8 @@ export class AuthService {
       this.setUser({
         name: responsePayload.name,
         email: responsePayload.email,
-        password: '',
+        authMode: 'google',
+        authVerifier: '',
         roles: [],
         isActive: false,
         lastLogin: 0,
@@ -134,7 +135,7 @@ export class AuthService {
         avatar: responsePayload.picture,
         notifications: [],
         settings: undefined,
-        isEmailVerified: false,
+        isEmailVerified: responsePayload.email_verified,
         isPhoneNumberVerified: false
       });
       this.loginMode.set('google');
@@ -190,9 +191,10 @@ export class AuthService {
 }
 
 const MOCK_USER  : User = {
-  name: localStorage.getItem('userId') || '1234',
+  name: window[STORAGE_TYPE].getItem(AUTH_CONSTANTS.userStorageKey) || '1234',
   email: '',
-  password: '',
+  authMode: 'email',
+  authVerifier: '',
   roles: [],
   isActive: false,
   lastLogin: Date.now(),

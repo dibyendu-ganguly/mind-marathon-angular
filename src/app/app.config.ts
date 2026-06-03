@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { AppEnvConfig } from '../environments/environment.model';
 import { routes } from './app.routes';
 import { AuthService } from './services/auth.service';
+import { AUTH_CONSTANTS } from './constants/auth.constants';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'enabled',
@@ -29,7 +30,7 @@ const checkAuthentication = (storageService:StorageService,authService:AuthServi
   
   return new Promise((resolve) => {
     // Simulate an async authentication check (e.g., checking token validity)
-    const user = storageService.getItem('user');
+    const user = storageService.getItem(AUTH_CONSTANTS.userStorageKey);
     if(user){
       authService.setUser(JSON.parse(user));
     }
@@ -37,25 +38,26 @@ const checkAuthentication = (storageService:StorageService,authService:AuthServi
   });
 };
 
+const initializeApp = () => {
+  const storageService = inject(StorageService);
+  const authService = inject(AuthService);
+  return new Promise<void>(async (resolve) => {
+    try {
+      const config = await loadServerConfig();
+      console.log('Server config loaded:', config);
+      environment.config = { ...config } as AppEnvConfig['config'];
+      await checkAuthentication(storageService, authService);
+      resolve();
+    } catch (error) {
+      console.error('Failed to load server config:', error);
+      resolve();
+    }
+  });
+};
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAppInitializer(() => {
-      const storageService = inject(StorageService);
-      const authService = inject(AuthService);
-      return new Promise<void>(async (resolve) => {
-
-        try {
-          const config = await loadServerConfig();
-          console.log('Server config loaded:', config);
-          environment.config = {...config} as AppEnvConfig['config'];
-          await checkAuthentication(storageService, authService);
-          resolve();
-        } catch (error) {
-          console.error('Failed to load server config:', error);
-          resolve();
-        }
-      });
-    }),
+    provideAppInitializer(initializeApp),
     provideZoneChangeDetection({ eventCoalescing: true }),
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     provideRouter(routes, withHashLocation(), inMemoryScrollingFeature),
