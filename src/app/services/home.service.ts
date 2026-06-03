@@ -19,7 +19,7 @@ export class HomeService {
   getQuoteOfTheDay(): Observable<HomeQuote> {
     if (!this.quote$) {
       this.quote$ = this.http.get<HomeQuote>('https://motivational-spark-api.vercel.app/api/quotes/random').pipe(
-        retry(),
+        // retry(),
         shareReplay({ bufferSize: 1, refCount: true })
       );
     }
@@ -65,7 +65,7 @@ export class HomeService {
     //     shareReplay({ bufferSize: 1, refCount: true })
     //   );
     // }
-    console.log(this.events$.value())
+    // console.log(this.events$,this.events$.status(),this.events$.isLoading(),this.events$.value())
     return this.events$;
   }
 
@@ -78,7 +78,7 @@ export class HomeService {
             const events: OnThisDayEvents[] = eventsResponse.events?? [];
             const births: OnThisDayEvents[] = birthsResponse.births?? [];
             const deaths: OnThisDayEvents[] = deathsResponse.deaths?? [];
-            console.log({Events: events, Births: births, Deaths: deaths});
+            // console.log({Events: events, Births: births, Deaths: deaths});
             return {Events: events, Births: births, Deaths: deaths};
           }),
           // retry(),

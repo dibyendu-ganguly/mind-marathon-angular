@@ -1,3 +1,4 @@
+import { authGuard } from './../auth/auth.guard';
 import { Routes } from '@angular/router';
 import { createQuizGuard } from './create-quiz/create-quiz.guards';
 
@@ -9,7 +10,7 @@ const quizRoutes: Routes = [
     children:[
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', loadComponent: () => import('./quiz-home/quiz-home.component').then((m) => m.QuizHomeComponent) },
-      { path: 'create', loadComponent: () => import('./create-quiz/create-quiz.component').then((m) => m.CreateQuizComponent), canActivate: [createQuizGuard]},
+      { path: 'create', loadComponent: () => import('./create-quiz/create-quiz.component').then((m) => m.CreateQuizComponent), canActivate: [authGuard, createQuizGuard]},
       { path: 'view', loadComponent: () => import('./view-quiz/view-quiz.component').then((m) => m.ViewQuizComponent) },
     ]
   },

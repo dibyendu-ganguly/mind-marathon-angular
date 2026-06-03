@@ -7,23 +7,18 @@ import { Inject, Injectable } from '@angular/core';
 export class StorageService {
 
   constructor(@Inject(DOCUMENT) private document: Document) { }
+  private readonly storage = this.document.defaultView?.localStorage;
 
   setItem(key: string, value: string): void {
-    const localStorage = this.document.defaultView?.localStorage;
 
-    if (localStorage) {
-      const item = localStorage.getItem(key);
-
-      if (item) {
-        localStorage.setItem(key, value);
-      }
+    if (this.storage) {
+      this.storage.setItem(key, value);
     }
   }
 
   getItem(key: string): string | null {
-    const localStorage = this.document.defaultView?.localStorage;
-    if (localStorage) {
-      const item = localStorage.getItem(key);
+    if (this.storage) {
+      const item = this.storage.getItem(key);
 
       if (item) {
         return item;
@@ -33,12 +28,11 @@ export class StorageService {
   }
 
   removeItem(key: string): void {
-    const localStorage = this.document.defaultView?.localStorage;
-     if (localStorage) {
-      const item = localStorage.getItem(key);
+     if (this.storage) {
+      const item = this.storage.getItem(key);
 
       if (item) {
-        localStorage.removeItem(key);
+        this.storage.removeItem(key);
       }
     }
   }

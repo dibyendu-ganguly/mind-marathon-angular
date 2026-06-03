@@ -3,16 +3,17 @@
 </header>
 
 
-
-
 <main class="pt-20 main" [class.pt-40]="!googleTranslatorHidden()">
-  <app-chat-button class="bottom-32 right-5 fixed"/>
+  <!-- @if(!isOnAuthPage){ -->
+    <app-chat-button class="bottom-32 right-5 fixed"/>
+  <!-- } -->
 
   <router-outlet/>
   <!-- <app-test-placeholder/> -->
 </main>
 
 <app-footer></app-footer>
+
 
 
 

@@ -13,10 +13,10 @@ export interface User {
   // twoFactorEnabled: boolean;
   // twoFactorSecret: string;
   phoneNumber: string;
-  address: Address;
+  address?: Address;
   avatar: string;
-  notifications: Notification[];
-  settings: Settings;
+  notifications?: Notification[];
+  settings?: Settings;
   isEmailVerified: boolean;
   isPhoneNumberVerified: boolean;
 }

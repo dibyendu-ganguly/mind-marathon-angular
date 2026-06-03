@@ -156,15 +156,16 @@ export class ChatService {
     if(this.isServerDisconnected()){
       return;
     }
-    const sender = this.authService.getUser();
+    const sender = this.authService.user();
     const roomId = this.roomId();
     if(roomId){
+      const senderName = sender?.name ?? 'Unknown';
       const msg : UserMessage = {
         message: message,
         sentTime: new Date().toISOString(),
         sentTo: roomId,
-        senderId: sender.name,
-        senderName: sender.name
+        senderId: senderName,
+        senderName: senderName
       }
       this.socket.emit(SOCKET_EVENTS.Message, msg,
         (response: ServerEvent) => {
@@ -175,7 +176,7 @@ export class ChatService {
       );
       if(this.typing){
         setTimeout(() => {
-          this.stopTyping(sender.name);
+          this.stopTyping(senderName);
         }, 500);
       }
     }
@@ -204,7 +205,7 @@ export class ChatService {
     if(this.isServerDisconnected()){
       return;
     }
-    const typerId = this.authService.getUser().name;
+    const typerId = this.authService.user()?.name ?? 'Unknown';
     if (!this.roomConnected()) {
       return;
     }
@@ -235,7 +236,7 @@ export class ChatService {
   public typing$: BehaviorSubject<string[]> = new BehaviorSubject(([] as string[]));
   setupTypingListener = false;
   public getTypingNotification = () => {
-    const myUserId = this.authService.getUser().name;
+    const myUserId = this.authService.user()?.name;
     if (this.roomConnected() && !this.setupTypingListener){
       this.socket.on(SOCKET_EVENTS.Typing, (userId: string) => {
         if(userId !== myUserId){

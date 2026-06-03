@@ -1,19 +1,155 @@
+import { StorageService } from './storage.service';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Settings, User } from './../models/user.model';
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { computed, inject, Injectable, NgZone, signal, WritableSignal } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { AUTH_CONSTANTS } from '../constants/layout.constants';
 
-
+export declare var google: any;
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private storageService: StorageService
+  ) { }
 
-  private user: WritableSignal<User|null> = signal(null);
+  private _user: WritableSignal<User|null> = signal(null);
 
-  getUser() {
-    return MOCK_USER;
-    return this.user;
+  setUser(user:User) {
+    this._user.set({...user});
+    this.storageService.setItem('user', JSON.stringify(user));
+    console.log("User set in AuthService:", user, this.storageService.getItem('user'));
+  }
+
+  clearUser() {
+    this._user.set(null);
+    this.storageService.removeItem('user');
+  }
+
+  get user() {
+    // return MOCK_USER;
+    return this._user || JSON.parse(this.storageService.getItem('user') ?? 'null');
+  }
+
+  isAuthenticated = computed(() => this.user() !== null);
+
+  private _isOnAuthPage = signal(false);
+  setAuthPageStatus(status:boolean) {
+    this._isOnAuthPage.set(status);
+  }
+  get authPageStatus() {
+    return this._isOnAuthPage;
+  }
+  loginMode = signal<'google' | 'email' | null>(null);
+
+  loginSuccessRedirectUri = '';
+  redirectAfterLoginSuccess() { 
+    this.router.navigate([this.loginSuccessRedirectUri]);
+  }
+
+  logoutSuccessRedirectUri = '';
+  redirectAfterLogoutSuccess() { 
+    this.router.navigate([this.logoutSuccessRedirectUri]);
+  }
+
+
+  private ngZone = inject(NgZone);
+
+  setUpGoogleSignIn() {
+
+    if(environment.config?.googleClientId) {
+      google.accounts.id.initialize({
+        client_id: environment.config?.googleClientId ,
+        callback: this.handleCredentialResponse.bind(this),
+      });
+
+      this.renderResponsiveButton();
+      let resizeTimeout : ReturnType<typeof setTimeout>  = setTimeout(() => '', 1000);
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(this.renderResponsiveButton, 150);
+      });
+    }
+  }
+
+  renderResponsiveButton() {
+    const container = document.getElementById(AUTH_CONSTANTS.googleBtnId);
+
+    // Capture current container width (clamped within Google's 400px maximum constraint)
+    const currentWidth = container?.getBoundingClientRect().width || 400;
+
+    // Re-initialize and render the official button
+    google.accounts.id.renderButton(
+      container,
+      { 
+        theme: "filled_blue", 
+        size: "large", 
+        width: currentWidth // Passes absolute pixel number, not percentage
+      }
+    );
+  }
+
+  /** This function is called when the user successfully signs in with Google */
+  handleCredentialResponse(response: any) {
+    const decodeJWT = (token:string) => {
+
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
+    }
+    // Wrap the response processing inside NgZone to update Angular's execution context
+    this.ngZone.run(() => {
+      // Send response.credential token to your backend API for verification
+      console.log(response,"Encoded JWT ID token: " +  response.credential);
+
+      const responsePayload = decodeJWT(response.credential);
+
+      console.log("Decoded JWT ID token fields:");
+      console.log("  Full Name: " + responsePayload.name);
+      console.log("  Given Name: " + responsePayload.given_name);
+      console.log("  Family Name: " + responsePayload.family_name);
+      console.log("  Unique ID: " + responsePayload.sub);
+      console.log("  Profile image URL: " + responsePayload.picture);
+      console.log("  Email: " + responsePayload.email);
+      this.setUser({
+        name: responsePayload.name,
+        email: responsePayload.email,
+        password: '',
+        roles: [],
+        isActive: false,
+        lastLogin: 0,
+        registrationDate: 0,
+        phoneNumber: '',
+        avatar: responsePayload.picture,
+        notifications: [],
+        settings: undefined,
+        isEmailVerified: false,
+        isPhoneNumberVerified: false
+      });
+      this.loginMode.set('google');
+      this.redirectAfterLoginSuccess();
+    });
+
+  }
+
+  signOut(){
+    if(this.loginMode() === 'google'){
+      google.accounts.id.disableAutoSelect();
+    }
+    
+    this.clearUser();
+    this.redirectAfterLogoutSuccess();
   }
   
 
@@ -30,7 +166,7 @@ export class AuthService {
    *
    */
   updateUserProperty<K extends keyof User>(property:K, value:User[K]) {
-      this.user.update((user) => {
+      this._user.update((user) => {
         if(user != null)
          return ({...user, [property]: value });
         return user;
@@ -38,13 +174,13 @@ export class AuthService {
   }
 
   // updateUserSettings<T extends keyof User, K extends keyof T>(key:T, subkey:K, value:T[K]) {
-  //   if(this.user() == null) return;
-  //   const currentkeyval = this.user()[key] ?? null;
+  //   if(this._user() == null) return;
+  //   const currentkeyval = this._user()[key] ?? null;
 
   //   if(currentkeyval == null) return;
 
   //   const newsetting = {...currentkeyval, [subkey]: value};
-  //   this.user.update((user) => {
+  //   this._user.update((user) => {
   //     if(user != null)
   //       return ({...user, settings:newsetting})
   //     return user;

@@ -1,4 +1,3 @@
-// auth.guard.ts
 import { inject } from '@angular/core';
 import { Router, CanActivateFn } from '@angular/router';
 import { QuizService } from '../../../services/quiz.service';

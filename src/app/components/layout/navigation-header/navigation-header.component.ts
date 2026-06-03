@@ -1,16 +1,17 @@
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { Component, inject, input } from '@angular/core';
-import { CONTRAST_OPTIONS, ContrastOption, ThemeService } from '../../../services/layout.service';
 import { CommonModule } from '@angular/common';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { Component, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { ThemeService } from '../../../services/layout.service';
 import { ContrastChangeComponent } from '../contrast-change/contrast-change.component';
 import { LanguageSelectorComponent } from '../language-selector/language-selector.component';
-import { RouterModule } from '@angular/router';
-import { ToggleAnimation } from './toggle.animation';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { UserDropdownMenuComponent } from '../user-dropdown-menu/user-dropdown-menu.component';
+import { ToggleAnimation } from './toggle.animation';
 
 export type ProgressMode = 'determinate'|'indeterminate';
 
@@ -38,4 +39,7 @@ export class NavigationHeaderComponent {
     { label: 'Services', link: '/services' },
     { label: 'Contact', link: '/contact' }
   ];
+
+  authService = inject(AuthService);
+  isAuthenticated = this.authService.isAuthenticated;
 }
