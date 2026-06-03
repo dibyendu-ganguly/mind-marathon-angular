@@ -1,21 +1,40 @@
+@let user = authService.user();
+@if(user){
 <!-- <div class="group-hover:block z-50 hidden my-4 text-base list-none bg-primary text-on-primary divide-y divide-gray-100 rounded-lg shadow-sm"> -->
+  
   <div class="px-4 py-3">
-    <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-    <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">name&commat;mm.com</span>
+    <span class="block text-sm text-gray-900 dark:text-white">{{user.name}}</span>
+    <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{user.email}}</span>
   </div>
   <ul class="py-2 top-0" aria-labelledby="user-menu-button">
     <li>
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+      <a href="#" class="block px-4 py-2 text-sm">Dashboard</a>
     </li>
     <li>
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+      <a href="#" class="block px-4 py-2 text-sm">Settings</a>
     </li>
     <li>
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
+      <a href="#" class="block px-4 py-2 text-sm">Earnings</a>
     </li>
     <li>
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+      <a class="block px-4 py-2 text-sm cursor-pointer hover:underline" (click)="signOut()">
+        Sign out
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right inline-block" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+          <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+        </svg>
+      </a>
     </li>
   </ul>
 <!-- </div> -->
-
+} @else if(!isOnAuthPage()) {
+  <div class="px-4 py-3">
+    <a class="block text-sm hover:underline" [routerLink]="['/auth']" routerLinkActive="router-link-active" >
+      Login
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key  inline-block" viewBox="0 0 16 16">
+        <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8m4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5"/>
+        <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+      </svg>
+    </a>
+  </div>
+}

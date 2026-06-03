@@ -12,6 +12,7 @@ import { FooterComponent } from "./components/layout/footer/footer.component";
 import { ChatButtonComponent } from './components/layout/chat-button/chat-button.component';
 import { DOCUMENT } from '@angular/common';
 import { FullScreenModeListenerDirective } from './directives/full-screen-mode-listener.directive';
+import { AuthService } from './services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -33,12 +34,14 @@ export class AppComponent implements OnInit {
   // Sets initial value to true to show loading spinner on first load
 
   mode = signal<ProgressMode>('determinate');
+  authService = inject(AuthService);
+  readonly isOnAuthPage = this.authService.authPageStatus;
 
   constructor(private router: Router,
     private chatService: ChatService,
     @Inject(DOCUMENT) private document: any,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
   ) {
     this.router.events.subscribe((e : Event) => {
        this.navigationInterceptor(e);

@@ -13,7 +13,7 @@
 <!-- #endregion : Home Page Hero Section-->
 
 <!-- #region : Events -->
-<div id="ourEvents" #ourEvents class="bg-secondary-container w-full pt-12 p-4 md:p-16">
+<div id="ourEvents" #ourEvents class="bg-secondary-container w-full pt-12 p-4 sm:p-16">
 
   <fieldset class="fieldset mt-[-12px] min-h-56 flex flex-col w-full justify-between text-center bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-auto">
     <legend class="fieldset-legend">
@@ -21,7 +21,7 @@
         Events
       </div>
     </legend>
-    <div class="pt-4 p-8 h-full grid grid-cols-1 gap-8 sm:grid-cols-6 sm:gap-4">
+    <div class="pt-4 p-8 h-full grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
       @if(events|async ; as eventList){
         @let viewItems = 5;
         @let cardClass = "flex flex-col bg-surface p-4 rounded-md shadow-xs h-40 sm:h-52";
@@ -112,7 +112,8 @@
 
   <!--#region : On This Day Header Events grid -->
   <div class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-4">
-    @if(onThisdayEvents.hasValue() ;){
+    <!-- {{onThisdayEvents.value()}} -->
+    @if(onThisdayEvents.hasValue()){
       @let allEvents = onThisdayEvents.value();
       <ng-container
         *ngTemplateOutlet="fieldset; context: {
@@ -135,7 +136,7 @@
           contentParams:{ $implicit: allEvents.Deaths}
         }">
       </ng-container>
-    } @else if (onThisdayEvents.isLoading()){
+    } @else {
       <ng-container
         *ngTemplateOutlet="fieldset; context: {
           $implicit: 'Events',

@@ -5,7 +5,7 @@ export const LinkClassList = "text-primary hover:text-tertiary pointer cursor-po
 export const EXTERNAL_LINKS = {
   facebook: 'https://www.facebook.com/p/Mind-Marathon-100079927641799/',
   instagram: 'https://www.instagram.com/mind__marathon',
-  github: 'https://github.com/dibyendu-ganguly/CapgeminiInternship'
+  github: 'https://github.com/dibyendu-ganguly/mind-marathon-angular'
 } as const;
 
 export const RESOURCES = [
@@ -23,3 +23,6 @@ export const RESOURCES = [
   }
 ] as const;
 
+export const AUTH_CONSTANTS = {
+  googleBtnId: 'google-btn',
+} as const;

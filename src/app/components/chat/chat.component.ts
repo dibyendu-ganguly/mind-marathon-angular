@@ -41,7 +41,7 @@ export class ChatComponent implements OnInit {
   roomCodeToJoin: string = '';
   private destroyRef = inject(DestroyRef);
 
-  myUserId = this.authService.getUser().name;
+  myUserId = this.authService.user()?.name || 'Unknown';
 
   socketServerEventsSubscription !: Subscription;
   newMsgSubscription !: Subscription;

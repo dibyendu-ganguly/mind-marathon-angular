@@ -38,7 +38,7 @@
         <!-- User -->
         <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
           <span class="sr-only">Open user menu</span>
-          <img class="w-10 h-10 rounded-full" src="assets/images/profile-picture-3.jpg" alt="user photo">
+          <img class="w-10 h-10 rounded-full" [src]="isAuthenticated() ? authService.user()?.avatar : 'assets/images/avatar-placeholder-general.jpeg' " alt="user photo">
         </button>
 
         <!-- User dropdown menu -->
